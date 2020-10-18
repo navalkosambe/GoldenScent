@@ -4,32 +4,38 @@ table 50100 "Item Staging Table"
 
     fields
     {
-        field(1; "Entry No."; Integer)
+
+        field(1; "product_id"; Code[20])
         {
             DataClassification = ToBeClassified;
 
         }
-        field(2; "product_id"; Code[20])
+        field(2; "sku"; Code[20])
         {
             DataClassification = ToBeClassified;
 
         }
-        field(3; "sku"; Code[10])
+        field(3; item_type; Text[20])
         {
             DataClassification = ToBeClassified;
 
         }
-        field(4; item_type; Text[20])
+        field(4; "category_id"; Text[250])
         {
             DataClassification = ToBeClassified;
 
         }
-        field(5; "category_id"; Text[250])
+        field(5; "website_id"; Text[250])
         {
             DataClassification = ToBeClassified;
 
         }
-        field(6; "website_id"; Text[250])
+        field(6; Name; Text[100])
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(7; set; Text[10])
         {
             DataClassification = ToBeClassified;
 
@@ -39,7 +45,7 @@ table 50100 "Item Staging Table"
 
     keys
     {
-        key(PK; "Entry No.")
+        key(PK; product_id)
         {
             Clustered = true;
         }

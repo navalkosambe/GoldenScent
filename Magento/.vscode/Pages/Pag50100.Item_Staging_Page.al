@@ -16,6 +16,10 @@ page 50100 "Item Staging Page"
                     ApplicationArea = All;
 
                 }
+                field(Name; Name)
+                {
+                    ApplicationArea = All;
+                }
                 field(sku; sku)
                 {
                     ApplicationArea = All;
@@ -51,6 +55,10 @@ page 50100 "Item Staging Page"
             action("Get Items from Magento")
             {
                 ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = GetEntries;
 
                 trigger OnAction();
                 var
