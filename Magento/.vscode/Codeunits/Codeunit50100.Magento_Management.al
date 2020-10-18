@@ -1,5 +1,6 @@
 codeunit 50100 "Magento Management"
 {
+    EventSubscriberInstance = StaticAutomatic;
     trigger OnRun()
     begin
 
@@ -42,6 +43,7 @@ codeunit 50100 "Magento Management"
         lProdID: code[20];
         lFlag: Boolean;
     begin
+        //Routine to get Items from Magento<<
         lUrl := 'http://54.247.2.198/api/v2_soap';
         clear(lRecXMLBuffer);
         lRecXMLBuffer.AddGroupElement('soapenv:Envelope');
@@ -85,7 +87,7 @@ codeunit 50100 "Magento Management"
             lXMLDomMgt.LoadXMLDocumentFromText(lLoginResult, lXMLDoc);
             lXMLDoc.SelectSingleNode('//*/loginReturn', lXMLRootNode);
             lSessionId := lXMLRootNode.AsXmlElement().InnerText;
-
+            Error(lSessionId);
             Clear(lRecXMLBuffer2);
             lRecXMLBuffer2.AddGroupElement('soapenv:Envelope');
             lRecXMLBuffer2.AddAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -147,9 +149,7 @@ codeunit 50100 "Magento Management"
                                             lFlag := false;
                                             lItemStaging.init;
                                             lItemStaging.product_id := lRecXMLBuffer.value;
-                                            lProdID := lItemStaging.product_id;
                                         end;
-
                                     end;
                                 '/SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:catalogProductListResponse/storeView/item/sku':
                                     lItemStaging.sku := lRecXMLBuffer.Value;
@@ -174,6 +174,28 @@ codeunit 50100 "Magento Management"
                     end;
                 end;
 
+            end;
+        end;
+    end;
+
+    procedure ConvertToNAVItem(var pItemStaging: Record "Item Staging Table");
+    var
+        lItem: Record Item;
+    begin
+        with pItemStaging do begin
+            lItem.reset;
+            lItem.SetRange("Magento Product ID", product_id);
+            if not litem.FindFirst() then begin
+                lItem.init;
+                lItem."No." := product_id;
+                lItem.Description := Name;
+                lItem."Magento Type" := item_type;
+                lItem."Magento SKU" := sku;
+                lItem."Magento Category_ID" := category_id;
+                lItem."Magento Website_ID" := website_id;
+                if lItem.Insert() then
+                    "Converted to NAV Item" := true;
+                Modify();
             end;
         end;
     end;

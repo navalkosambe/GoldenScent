@@ -40,6 +40,12 @@ page 50100 "Item Staging Page"
                     ApplicationArea = All;
 
                 }
+                field(Converted; "Converted to NAV Item")
+                {
+                    ApplicationArea = All;
+
+                }
+
             }
         }
         area(Factboxes)
@@ -65,6 +71,30 @@ page 50100 "Item Staging Page"
                     lMageMgt: Codeunit 50100;
                 begin
                     Clear(lMageMgt);
+                    lMageMgt.GetItemFromMagento();
+                end;
+            }
+            action("Convert to NAV")
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = Process;
+
+                trigger OnAction();
+                var
+                    lMageMgt: Codeunit "Magento Management";
+                    lItemStaging: Record "Item Staging Table";
+                begin
+                    Clear(lMageMgt);
+                    lItemStaging.Reset();
+                    lItemStaging.SetRange("Converted to NAV Item", false);
+                    if lItemStaging.FindSet() then begin
+                        repeat
+                            lMageMgt.ConvertToNAVItem(lItemStaging);
+                        until lItemStaging.Next() = 0;
+                    end;
                     lMageMgt.GetItemFromMagento();
                 end;
             }

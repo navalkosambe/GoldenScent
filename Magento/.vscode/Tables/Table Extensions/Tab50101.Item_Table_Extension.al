@@ -27,6 +27,7 @@ tableextension 50101 "Item Extension" extends Item
         {
             DataClassification = ToBeClassified;
         }
+
     }
 
     var

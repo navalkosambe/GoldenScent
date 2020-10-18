@@ -40,6 +40,11 @@ table 50100 "Item Staging Table"
             DataClassification = ToBeClassified;
 
         }
+        field(8; "Converted to NAV Item"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
     }
 
@@ -66,7 +71,8 @@ table 50100 "Item Staging Table"
 
     trigger OnDelete()
     begin
-
+        if Rec."Converted to NAV Item" then
+            Error('The item has been converted to NAV Item, It cannot be deleted.');
     end;
 
     trigger OnRename()

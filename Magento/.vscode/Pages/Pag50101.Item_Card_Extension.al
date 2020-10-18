@@ -7,18 +7,7 @@ pageextension 50101 "Item Card Extension" extends "Item Card"
             group(Magento)
             {
                 CaptionML = ENU = 'Magento';
-                field("Magento Product ID"; "Magento Product ID")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
 
-                }
-                field("Magento Product Name"; "Magento Product Name")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
-
-                }
                 field("Magento SKU"; "Magento SKU")
                 {
                     ApplicationArea = All;
