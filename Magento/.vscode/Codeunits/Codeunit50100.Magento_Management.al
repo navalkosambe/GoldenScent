@@ -435,6 +435,8 @@ codeunit 50100 "Magento Management"
                                     lOrderStaging.customer_is_guest := lRecXMLBuffer.Value;
                                 'email_sent':
                                     lOrderStaging.email_sent := lRecXMLBuffer.Value;
+                                'order_id':
+                                    lOrderStaging.order_id := lRecXMLBuffer.Value;
 
                                 'protect_code':
                                     lOrderStaging.protect_code := lRecXMLBuffer.Value;
